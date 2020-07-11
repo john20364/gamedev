@@ -1,6 +1,2 @@
 #ignore the executable file
 test
-
-#ignore the objectfiles in directory obj/
-!obj/
-obj/*
