@@ -2,4 +2,4 @@
 test
 
 #ignore the objectfiles in directory obj/
-obj/
+obj/*
