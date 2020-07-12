@@ -50,23 +50,24 @@ void Player::update() {
 	Mob::update();
 	walking ? spriteCurrent->update() : spriteCurrent->startFrame();
 
-	int xa = 0;
-	int ya = 0;
+	double xa = 0;
+	double ya = 0;
+	double speed = 1.0;
 
 	if (input->left) {
 		spriteCurrent = spriteLeft;	
-		xa -= 2;	
+		xa -= speed;	
 	} else if (input->right) {
 		spriteCurrent = spriteRight;	
-		xa += 2;
+		xa += speed;
 	}
 
 	if (input->up) {
 		spriteCurrent = spriteUp;	
-		ya -= 2;	
+		ya -= speed;	
 	} else if (input->down) {
 		spriteCurrent = spriteDown;	
-		ya += 2;
+		ya += speed;
 	} 
 
 	if (xa != 0 || ya != 0) {

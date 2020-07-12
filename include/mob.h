@@ -9,7 +9,7 @@ public:
 	enum Direction {UP, DOWN, LEFT, RIGHT};
 	Mob();
 	virtual ~Mob();
-	virtual void move(int xa, int ya);
+	virtual void move(double xa, double ya);
 	virtual void update();
 	virtual void render();
 	virtual void shoot(Projectile* projectile);
@@ -20,6 +20,6 @@ protected:
 	Direction dir;
 	bool walking;
 private:
-	int normalize(int value);
+	int normalize(double value);
 };
 #endif

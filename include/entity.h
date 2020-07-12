@@ -7,7 +7,7 @@
 
 class Entity {
 public:
-	int x, y;
+	double x, y;
 
 	Entity();
 	virtual ~Entity();

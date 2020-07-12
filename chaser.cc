@@ -47,16 +47,17 @@ Chaser::~Chaser() {
 void Chaser::moving() {
 	xa = 0;
 	ya = 0;
+	double speed = 0.7;
 
 	std::list<Player*> players = 
 		LevelPlayers::getInstance()->getPlayers(this, 50);	
 
 	if (players.size() > 0) {
 		Player* player = players.front();
-		if (x < player->x) xa++;
-		if (x > player->x) xa--;
-		if (y < player->y) ya++;
-		if (y > player->y) ya--;
+		if ((int)x < (int)(player->x)) xa += speed;
+		if ((int)x > (int)(player->x)) xa -= speed;
+		if ((int)y < (int)(player->y)) ya += speed;
+		if ((int)y > (int)(player->y)) ya -= speed;
 	}
 
 	if (xa != 0 || ya != 0) {

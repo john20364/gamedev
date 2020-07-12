@@ -41,7 +41,7 @@ void Mob::shoot(Projectile* projectile) {
 	projectiles.push_back(projectile);
 }
 
-void Mob::move(int xa, int ya) {
+void Mob::move(double xa, double ya) {
 	if (xa != 0 && ya != 0) {
 		move(xa, 0);
 		move(0, ya);
@@ -53,25 +53,36 @@ void Mob::move(int xa, int ya) {
 	if (ya > 0) dir = Mob::Direction::DOWN;
 	if (ya < 0) dir = Mob::Direction::UP;
 
-	for (int i = 0; i < abs(xa); ++i) {
-		if (!level->collision(x + normalize(xa), y, 3, 12, 8, 15)) {
-			x += normalize(xa);
-		}
-	}
-	for (int j = 0; j < abs(ya); ++j) {
-		if (!level->collision(x, y + normalize(ya), 3, 12, 8, 15)) {
-			y += normalize(ya);
+	while (xa != 0) {
+		if (abs(xa) > 1) {
+			if (!level->collision(x + normalize(xa), y, 3, 12, 8, 15)) {
+				x += normalize(xa);
+			}
+			xa -= normalize(xa);
+		} else {
+			if (!level->collision(x + xa, y, 3, 12, 8, 15)) {
+				x += xa;
+			}
+			xa = 0;
 		}
 	}
 
-//	if (!level->collision(x + xa, y + ya, 3, 12, 8, 15)) {
-//		// -1, 0, 1
-//		x += xa;
-//		y += ya;
-//	}
+	while (ya != 0) {
+		if (abs(ya) > 1) {
+			if (!level->collision(x, y + normalize(ya), 3, 12, 8, 15)) {
+				y += normalize(ya);
+			}
+			ya -= normalize(ya);
+		} else {
+			if (!level->collision(x, y + ya, 3, 12, 8, 15)) {
+				y += ya;
+			}
+			ya = 0;
+		}
+	}
 }
 
-int Mob::normalize(int value) {
+int Mob::normalize(double value) {
 	if (value < 0) return -1;
 	return 1;
 }

@@ -14,6 +14,6 @@ public:
 	AnimatedSprite* spriteRight;	
 	AnimatedSprite* spriteCurrent;	
 protected:
-	int xa, ya;
+	double xa, ya;
 	int time;
 };
