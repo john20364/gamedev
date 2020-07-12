@@ -68,7 +68,7 @@ void Chaser::moving() {
 }
 
 void Chaser::update() {
-	if (++time %= 2) return;
+//	if (++time %= 2) return;
 	moving();
 	Mob::update();
 	walking ? spriteCurrent->update() : spriteCurrent->startFrame();

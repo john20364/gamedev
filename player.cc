@@ -55,18 +55,18 @@ void Player::update() {
 
 	if (input->left) {
 		spriteCurrent = spriteLeft;	
-		xa--;	
+		xa -= 2;	
 	} else if (input->right) {
 		spriteCurrent = spriteRight;	
-		xa++;
+		xa += 2;
 	}
 
 	if (input->up) {
 		spriteCurrent = spriteUp;	
-		ya--;	
+		ya -= 2;	
 	} else if (input->down) {
 		spriteCurrent = spriteDown;	
-		ya++;
+		ya += 2;
 	} 
 
 	if (xa != 0 || ya != 0) {

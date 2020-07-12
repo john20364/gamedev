@@ -20,5 +20,6 @@ protected:
 	Direction dir;
 	bool walking;
 private:
+	int normalize(int value);
 };
 #endif
