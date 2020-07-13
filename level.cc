@@ -4,6 +4,8 @@
 #include "include/screen.h"
 #include "include/levelentities.h"
 #include "include/levelplayers.h"
+#include "include/node.h"
+#include "include/voidtile.h"
 
 Level::Level(int width, int height) {
 	tiles = NULL;
@@ -20,6 +22,78 @@ Level::~Level() {
 	delete[] tiles;
 	LevelPlayers::getInstance()->destroy();
 	LevelEntities::getInstance()->destroy();
+}
+
+bool compare_fCost(const Node* first, const Node* second) {
+	return first->fCost < second->fCost;
+}
+
+template<typename Base, typename T>
+inline bool instanceof(const T&) {
+   return std::is_base_of<Base, T>::value;
+}
+
+bool Level::vecInList(std::list<Node*> list, Vector2i* vector) {
+	std::list<Node*>::iterator it;
+	for (it = list.begin(); it != list.end(); ++it) {
+		if((*it)->tile->equals(*vector)) return true;
+	}
+	return false;
+}
+
+void Level::clearNodeList(std::list<Node*> list) {
+	std::list<Node*>::iterator it;
+	for (it = list.begin(); it != list.end(); ++it) {
+		delete *it;
+		list.erase(it);
+	}
+}
+
+std::list<Node*>* Level::findPath(Vector2i* start, Vector2i* goal) {
+	std::list<Node*> openList;
+	std::list<Node*> closedList;
+	Node* current = new Node(start, NULL, 0, start->distance(*goal));
+	openList.push_back(current);
+
+	while (!openList.empty()) {
+		openList.sort(compare_fCost);
+		current = openList.front();
+		
+		if (current->tile->equals(*goal)) {
+			std::list<Node*>* path = new std::list<Node*>;
+			while (current->parent != NULL) {
+				path->push_back(current);
+				current = current->parent;
+			}
+			clearNodeList(openList);
+			clearNodeList(closedList);
+			return path;
+		}
+		openList.remove(current);
+		closedList.push_back(current);
+
+		for (int i = 0; i < 9; i++) {
+			if (i == 4) continue;
+			int x = current->tile->getX();
+			int y = current->tile->getY();
+			int xi = (i % 3) - 1; // -1, 0, 1
+			int yi = (i / 3) - 1; // -1, 0, 1
+			Tile& at = getTile(x + xi, y + yi);
+			if (instanceof<VoidTile>(at) || at.solid()) continue;
+			Vector2i* a = new Vector2i(x + xi, y + yi);
+			double gCost = current->gCost + current->tile->distance(*a);
+			double hCost = a->distance(*goal);
+			Node* node = new Node(a, current, gCost, hCost);
+			if (vecInList(closedList, a) && gCost >= node->gCost) continue;
+			if (!vecInList(openList, a) || gCost < node->gCost) {
+				openList.push_back(node);
+			} else {
+				delete node;
+			}
+		}
+	}
+	clearNodeList(closedList);
+	return NULL;
 }
 
 void Level::init() {

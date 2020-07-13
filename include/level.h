@@ -5,9 +5,13 @@
 #include <list>
 #include "tile.h"
 #include <SFML/Graphics.hpp>
+#include "node.h"
 
 class Level {
 public:
+	std::list<Node*>* findPath(Vector2i* start, Vector2i* goal);
+	bool vecInList(std::list<Node*> list, Vector2i* vector);
+	void clearNodeList(std::list<Node*> list);
 	Level(int width, int height);
 	Level(std::string path);
 	virtual ~Level();

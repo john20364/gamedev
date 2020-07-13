@@ -8,7 +8,7 @@ OBJS = 	main.o game.o keyboard.o screen.o spritesheet.o spritesheets.o sprite.o 
 		entity.o mob.o player.o flowertile.o rocktile.o spawnlevel.o levels.o \
 		tilecoord.o mouse.o projectile.o wizardprojectile.o levelentities.o \
 		spawnfactory.o particle.o normalparticle.o animatedsprite.o dummy.o \
-		chaser.o levelplayers.o
+		chaser.o levelplayers.o vector2i.o node.o
 HEADERS = 
 
 test : $(OBJS)

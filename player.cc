@@ -52,7 +52,7 @@ void Player::update() {
 
 	double xa = 0;
 	double ya = 0;
-	double speed = 1.0;
+	double speed = 1;
 
 	if (input->left) {
 		spriteCurrent = spriteLeft;	
